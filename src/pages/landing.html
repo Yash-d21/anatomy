@@ -1,0 +1,468 @@
+<template>
+    <require from="font-awesome/css/font-awesome.min.css"></require>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        .landing-container {
+            background-color: #000000;
+            color: #F5F5F7;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", system-ui, sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography */
+        .hero-title {
+            font-size: 84px;
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            color: #F5F5F7;
+        }
+
+        .hero-subtitle {
+            font-size: 26px;
+            font-weight: 400;
+            line-height: 1.45;
+            color: #86868B;
+            max-width: 600px;
+            margin: 0 0 48px;
+        }
+
+        .section-title {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            color: #F5F5F7;
+        }
+
+        .section-subtitle {
+            font-size: 22px;
+            color: #86868B;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .huge-text {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            color: #F5F5F7;
+        }
+
+        /* Layout */
+        .section-padding {
+            padding: 160px 8%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8%;
+            position: relative;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 10;
+            padding-right: 40px;
+        }
+
+        .hero-visual {
+            flex: 1.5;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Panels */
+        .glass-panel {
+            background-color: #1C1C1E;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .glass-panel:hover {
+            transform: scale(1.02);
+            background-color: #2C2C2E;
+        }
+
+        /* Flex rows */
+        .split-section {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .split-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .split-content {
+            flex: 1;
+        }
+
+        .split-visual {
+            flex: 1;
+            min-height: 500px;
+            border-radius: 24px;
+            background-color: #1C1C1E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Grids */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        /* Text styling */
+        .text-gradient {
+            background: linear-gradient(135deg, #2997FF, #5AC8FA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-accent {
+            color: #2997FF;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 18px 36px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: #F5F5F7;
+            color: #000000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #FFFFFF;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background-color: #1C1C1E;
+            color: #F5F5F7;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2C2C2E;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Typing Effect */
+        .js-typewriter {
+            border-right: 4px solid transparent;
+            padding-right: 4px;
+        }
+
+        .typing-cursor {
+            border-right-color: #F5F5F7;
+            animation: blink-caret 0.8s step-end infinite;
+        }
+
+        .text-gradient .typing-cursor {
+            border-right-color: #2997FF;
+            animation: blink-caret-blue 0.8s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #F5F5F7;
+            }
+        }
+
+        @keyframes blink-caret-blue {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: #2997FF;
+            }
+        }
+
+        /* Specifics */
+        .list-item {
+            font-size: 18px;
+            color: #F5F5F7;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item i {
+            color: #2997FF;
+            margin-right: 16px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Call to action */
+        .cta-section {
+            text-align: center;
+            padding: 160px 5%;
+            background-color: #000000;
+        }
+
+        @media (max-width: 1024px) {
+
+            .hero,
+            .split-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .split-section.reverse {
+                flex-direction: column;
+            }
+
+            .hero-content {
+                margin-bottom: 60px;
+                padding-right: 0;
+            }
+
+            .grid-3,
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <div class="landing-container">
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="text-accent">TARS</span>
+                <h1 class="hero-title">The Body, Alive.</h1>
+                <p class="hero-subtitle">Real-time 3D anatomy.<br>Tumors growing before your eyes.<br>Precision medicine
+                    — now.</p>
+                <div class="btn-group">
+                    <a href="#/welcome" class="btn btn-primary">Launch Simulation</a>
+                    <a href="#shift" class="btn btn-secondary">See More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <spline-viewer url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"></spline-viewer>
+            </div>
+        </section>
+
+        <!-- THE SHIFT -->
+        <section id="shift" class="section-padding" style="background-color: #000000;">
+            <p class="huge-text text-gradient"><span class="js-typewriter">Static is dead.</span></p>
+            <p class="huge-text" style="color: #86868B; font-size: 48px; margin-top: 24px;">Textbooks. Flat scans.
+                Frozen models.</p>
+            <p class="huge-text" style="margin-top: 48px;"><span class="js-typewriter">TARS makes anatomy
+                    breathe.</span></p>
+            <p class="huge-text" style="color: #86868B; font-size: 48px; margin-top: 24px;">Real-time biology.</p>
+            <p class="huge-text" style="margin-top: 48px;">
+                <span class="js-typewriter">This isn't viewing.</span><br>
+                <span style="color: #F5F5F7;" class="js-typewriter" data-delay="1200">This is living.</span>
+            </p>
+        </section>
+
+        <!-- IMMERSIVE ANATOMY -->
+        <section class="section-padding">
+            <div class="split-section">
+                <div class="split-content">
+                    <span class="text-accent">Immersive Anatomy</span>
+                    <h2 class="section-title">The human body.<br>Unlocked.</h2>
+                    <p class="section-subtitle" style="margin-bottom: 32px;">Full 3D scale.<br>Skin. Muscle. Bone.
+                        Organs.</p>
+                    <div class="list-item"><i class="fa fa-hand-pointer-o"></i> Peel layers like skin.</div>
+                    <div class="list-item"><i class="fa fa-crosshairs"></i> Perfect alignment.</div>
+                    <div class="list-item"><i class="fa fa-microchip"></i> GPU-smooth rotation.</div>
+                    <div class="list-item" style="margin-top: 24px; font-weight: 600; color: #F5F5F7;">Spin. Isolate.
+                        Feel the space.</div>
+                </div>
+                <div class="split-visual glass-panel">
+                    <i class="fa fa-user" style="font-size: 120px; color: #86868B; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRECISION CONTROL -->
+        <section class="section-padding" style="background-color: #000000;">
+            <div class="split-section reverse">
+                <div class="split-content">
+                    <span class="text-accent">Precision Control</span>
+                    <h2 class="section-title">Engineered for surgeons.</h2>
+                    <p class="section-subtitle" style="margin-bottom: 32px;">Every move — deliberate. Deadly accurate.
+                    </p>
+                    <div class="list-item"><i class="fa fa-circle-o-notch"></i> Inertia orbit.</div>
+                    <div class="list-item"><i class="fa fa-bullseye"></i> Raycast targeting.</div>
+                    <div class="list-item"><i class="fa fa-link"></i> Synchronized layers.</div>
+                    <div class="list-item"><i class="fa fa-search-plus"></i> Surgical zoom.</div>
+                    <div class="list-item"><i class="fa fa-exchange"></i> Local ↔ World toggle.</div>
+                </div>
+                <div class="split-visual glass-panel">
+                    <i class="fa fa-crosshairs" style="font-size: 120px; color: #86868B; opacity: 0.3;"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- TUMOR EVOLUTION -->
+        <section class="section-padding">
+            <div class="split-section">
+                <div class="split-content">
+                    <span class="text-accent" style="color: #FF453A;">Tumor Evolution</span>
+                    <h2 class="section-title">Cancer doesn't wait.<br>Neither does TARS.</h2>
+                    <p class="section-subtitle" style="margin-bottom: 32px;">Logistic growth. Live.<br>Volume explodes
+                        in real time.</p>
+                    <div class="list-item"><i class="fa fa-sliders" style="color: #FF453A;"></i> Tune rate. Tune limit.
+                    </div>
+                    <div class="list-item"><i class="fa fa-eye" style="color: #FF453A;"></i> Watch the monster spread.
+                    </div>
+                    <div class="list-item" style="margin-top: 24px; font-weight: 600; color: #F5F5F7;">See the math
+                        become fate.</div>
+                </div>
+                <div class="split-visual glass-panel">
+                    <i class="fa fa-bug" style="font-size: 120px; color: #FF453A; opacity: 0.4;"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANALYTICS ALIVE & SCENARIO ENGINE -->
+        <section class="section-padding" style="background-color: #000000;">
+            <div class="grid-2">
+                <div class="glass-panel" style="padding: 64px;">
+                    <span class="text-accent">Analytics Alive</span>
+                    <h2 class="section-title" style="font-size: 40px;">Numbers bleed into flesh.</h2>
+                    <div class="list-item"><i class="fa fa-line-chart"></i> Live growth curves.</div>
+                    <div class="list-item"><i class="fa fa-clock-o"></i> Time-lapse trajectories.</div>
+                    <div class="list-item"><i class="fa fa-cogs"></i> Sensitivity dials.</div>
+                    <div class="list-item"><i class="fa fa-refresh"></i> Dynamic tracking.</div>
+                    <p style="margin-top: 32px; font-size: 20px; font-weight: 500; color: #F5F5F7;">See
+                        structure.<br>Feel the data.</p>
+                </div>
+                <div class="glass-panel" style="padding: 64px;">
+                    <span class="text-accent">Scenario Engine</span>
+                    <h2 class="section-title" style="font-size: 40px;">Step into the case.</h2>
+                    <div class="list-item"><i class="fa fa-folder-open"></i> Pathology unfolds.</div>
+                    <div class="list-item"><i class="fa fa-map-signs"></i> Topic-driven missions.</div>
+                    <div class="list-item"><i class="fa fa-stethoscope"></i> Clinical content woven in.</div>
+                    <div class="list-item"><i class="fa fa-heartbeat"></i> Highlights pulse where it hurts.</div>
+                    <p style="margin-top: 32px; font-size: 20px; font-weight: 500; color: #F5F5F7;">Learn by surviving
+                        the simulation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY & USE CASES -->
+        <section class="section-padding">
+            <div class="grid-2">
+                <div>
+                    <span class="text-accent">Why TARS</span>
+                    <h2 class="section-title" style="font-size: 48px; margin-bottom: 40px;">The Edge.</h2>
+                    <div class="list-item"><b style="color: #F5F5F7; margin-right: 8px;">Precision —</b> zero drift.
+                    </div>
+                    <div class="list-item"><b style="color: #F5F5F7; margin-right: 8px;">Performance —</b> GPU fire.
+                    </div>
+                    <div class="list-item"><b style="color: #F5F5F7; margin-right: 8px;">Science —</b> math drives
+                        biology.</div>
+                    <div class="list-item"><b style="color: #F5F5F7; margin-right: 8px;">Control —</b> built for pros.
+                    </div>
+                </div>
+                <div>
+                    <span class="text-accent">Applications</span>
+                    <h2 class="section-title" style="font-size: 48px; margin-bottom: 40px;">Use Cases.</h2>
+                    <div class="list-item"><i class="fa fa-graduation-cap"></i> Med school redefined.</div>
+                    <div class="list-item"><i class="fa fa-search"></i> Pathology exposed.</div>
+                    <div class="list-item"><i class="fa fa-pie-chart"></i> Tumor modeling live.</div>
+                    <div class="list-item"><i class="fa fa-laptop"></i> Simulation-first learning.</div>
+                    <div class="list-item"><i class="fa fa-flask"></i> Research you can touch.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA & CREATORS -->
+        <section class="cta-section">
+            <h2 class="huge-text" style="font-size: 72px;">The body is waiting.</h2>
+            <p class="section-subtitle" style="margin: 32px 0 48px; font-size: 28px; color: #F5F5F7;">Enter the
+                simulation.</p>
+            <a href="#/welcome" class="btn btn-primary" style="font-size: 20px; padding: 20px 48px;">Launch TARS.
+                Now.</a>
+
+            <div style="margin-top: 120px; border-top: 1px solid #1C1C1E; padding-top: 64px;">
+                <p class="text-accent">Forged by</p>
+                <div style="display: flex; justify-content: center; gap: 64px; margin-top: 24px; flex-wrap: wrap;">
+                    <div style="text-align: left;">
+                        <h4 style="font-size: 24px; font-weight: 600; margin: 0; color: #F5F5F7;">Yashwanth Devulapally
+                        </h4>
+                        <p style="color: #86868B; margin: 8px 0 0;">Platform</p>
+                    </div>
+                    <div style="text-align: left;">
+                        <h4 style="font-size: 24px; font-weight: 600; margin: 0; color: #F5F5F7;">Nilesh Elligati</h4>
+                        <p style="color: #86868B; margin: 8px 0 0;">Simulation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

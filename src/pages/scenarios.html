@@ -1,0 +1,18 @@
+<template>
+
+  <section class="au-animate animate-fade-in" style="height: calc(100vh - 50px); overflow-y: auto; padding: 10px;"
+    ref="ap1">
+    <b t="title-scenarios">Virtual Patient Scenarios </b>
+    <table class="w3-table w3-large">
+      <tr>
+        <td class="w3-left-align"><a href="#/scenarios/${prevurl}"><i class="fa fa-arrow-left"></i><span
+              style="width:100%"> </span></a></td>
+        <td class="w3-center"><i>${currenttitle}</i></td>
+        <td class="w3-right-align"><a href="#/scenarios/${nexturl}"><span style="width:100%"> </span><i
+              class="fa fa-arrow-right"> </i> </a></td>
+      </tr>
+    </table>
+    <div innerhtml.bind="html"></div>
+  </section>
+
+</template>

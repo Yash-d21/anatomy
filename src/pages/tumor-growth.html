@@ -1,0 +1,113 @@
+<template>
+    <require from="../styles.css"></require>
+    <style>
+        .tumor-container {
+            display: flex;
+            flex-direction: row;
+            height: 80vh;
+            width: 100%;
+        }
+
+        .panel-left {
+            width: 40%;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            border-right: 1px solid #ddd;
+        }
+
+        .panel-right {
+            width: 60%;
+            position: relative;
+            background: #000;
+            color: white;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type=range] {
+            width: 100%;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            background: white;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .overlay-info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+
+    <section class="au-animate animate-fade-in tumor-container">
+        <div class="panel-left">
+            <h2 class="w3-text-blue"><i class="fa fa-line-chart"></i> Tumor Growth Projection</h2>
+            <p>Simulate tumor expansion using a Logistic Growth model.</p>
+
+            <div class="control-group">
+                <label>Growth Rate (r): ${growthRate}</label>
+                <input type="range" min="0.01" max="0.5" step="0.01" value.bind="growthRate"
+                    input.delegate="calculateGrowth()">
+            </div>
+
+            <div class="control-group">
+                <label>Carrying Capacity (K): ${carryingCapacity}</label>
+                <input type="range" min="100" max="5000" step="100" value.bind="carryingCapacity"
+                    input.delegate="calculateGrowth()">
+            </div>
+
+            <div class="control-group">
+                <label>Initial Size (N0): ${initialSize}</label>
+                <input type="range" min="1" max="100" step="1" value.bind="initialSize"
+                    input.delegate="calculateGrowth()">
+            </div>
+
+            <div class="control-group">
+                <label>Time Step (t): ${currentStep}</label>
+                <input type="range" min="0" max="100" step="1" value.bind="currentStep"
+                    input.delegate="updateVisualization()">
+                <button class="w3-button w3-blue w3-margin-top" click.delegate="play()">
+                    <i class="fa ${isPlaying ? 'fa-pause' : 'fa-play'}"></i> ${isPlaying ? 'Pause' : 'Play / Simulate'}
+                </button>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="growthChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="w3-panel w3-pale-blue w3-leftbar w3-border-blue">
+                <p><strong>Note:</strong> Mathematical model assumes logistic growth where growth slows as it approaches
+                    capacity.</p>
+            </div>
+        </div>
+
+        <div class="panel-right" ref="rendererContainer">
+            <div class="overlay-info">
+                <h3>Visualisation</h3>
+                <p>Projected Volume: ${currentSizeDisplay} mm³ (approx)</p>
+                <p><small>Scroll to zoom, Drag to rotate</small></p>
+            </div>
+        </div>
+    </section>
+</template>
